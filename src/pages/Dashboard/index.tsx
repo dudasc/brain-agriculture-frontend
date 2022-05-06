@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
 
                 <Grid>
                     <GridItem w='100%'>
-                        <PieGraph title="Culturas" data={charts[1]?.data?.data} />
+                        <PieGraph title="Aréa disponível" data={charts[1]?.data?.data} />
                     </GridItem>
                 </Grid>
             </Grid>
