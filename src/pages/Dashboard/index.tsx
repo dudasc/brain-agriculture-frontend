@@ -52,7 +52,7 @@ const Dashboard: React.FC = () => {
                                     <Text fontSize={'45px'}>
                                         {
                                             results[item.indexArrayResult].isFetching || results[item.indexArrayResult].isFetching
-                                                ? <Spinner size="lg" /> : results[item.indexArrayResult]?.data?.data.total} ha</Text>
+                                                ? <Spinner size="lg" /> : results[item.indexArrayResult]?.data?.data.total} {item.indexArrayResult !== 0 && 'ha'}</Text>
                                 </Stack>
 
 
