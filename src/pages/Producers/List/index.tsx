@@ -26,20 +26,20 @@ const ListProducers: React.FC = () => {
 
     const removeMutation = useMutation(
         async (id: number) => await ProducersHttpService.remove(id), {
-            onError: (error: any) => {
-                message.title = error.message;
-                message.status = "error";
+        onError: (error: any) => {
+            message.title = error.message;
+            message.status = "error";
 
-                toast(message);
-            },
-            onSuccess: () => {
-                message.title = "Produtor removido com sucesso";                
+            toast(message);
+        },
+        onSuccess: () => {
+            message.title = "Produtor removido com sucesso";
 
-                toast(message);
+            toast(message);
 
-                refetch();
-            },
-        }
+            refetch();
+        },
+    }
     );
 
     return (
@@ -79,8 +79,8 @@ const ListProducers: React.FC = () => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {data?.data.map((item: any) =>
-                                    <Tr>
+                                {data?.data.map((item: any, index: number) =>
+                                    <Tr key={index}>
                                         <Td>{item.id}</Td>
                                         <Td>{item.cpf}</Td>
                                         <Td>{item.name}</Td>
@@ -89,7 +89,7 @@ const ListProducers: React.FC = () => {
                                         <Td isNumeric>{item.total_area}</Td>
                                         <Td isNumeric>{item.total_arable_area}</Td>
                                         <Td isNumeric>{item.total_vegetation_area}</Td>
-                                        <Td>{JSON.stringify(item.crops)}</Td>
+                                        <Td>{item.crops}</Td>
                                         <Td>
                                             <IconButton
                                                 size={'md'}
@@ -101,8 +101,13 @@ const ListProducers: React.FC = () => {
                                                 size={'md'}
                                                 ml="2"
                                                 icon={<DeleteIcon />}
-                                                aria-label={'Ver detalhes'}
-                                                onClick={() => removeMutation.mutate(item.id)}
+                                                aria-label={'Excluir'}
+                                                onClick={() => {
+                                                    // eslint-disable-next-line no-restricted-globals
+                                                    if (confirm("Confirma exclusão?") === true) {
+                                                        return removeMutation.mutate(item.id)
+                                                    }
+                                                }}
                                             />
                                         </Td>
                                     </Tr>

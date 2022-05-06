@@ -1,27 +1,28 @@
-import { Divider, Grid, GridItem, Heading, Spinner, Stack, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Divider, Grid, GridItem, Spinner, Stack, Text, useColorMode } from "@chakra-ui/react";
 import { useQueries } from "react-query";
-import ArableAreaByVegetationChart from "../../components/charts/arable-area-by-vegetation";
-import FarmsByCropsChart from "../../components/charts/farms-by-crops";
-import FarmsByStateChart from "../../components/charts/farms-by-state";
+import PieGraph from "../../components/charts/pie-graph";
 import AppBaseLayout from "../../components/layouts/AppBaseLayout";
 import ReportsHttpService from "../../services/services/http/reports-http.service";
 
 const Dashboard: React.FC = () => {
     const { colorMode } = useColorMode();
     const results: any = useQueries([
-        { queryKey: ['', 0], queryFn: async () => await ReportsHttpService.getTotalFarms() },
-        { queryKey: ['', 1], queryFn: async () => await ReportsHttpService.getTotalHectares() },
-        { queryKey: ['', 2], queryFn: async () => await ReportsHttpService.getTotalArableArea() },
+        { queryKey: ['totalFarms', 0], queryFn: async () => await ReportsHttpService.getTotalFarms() },
+        { queryKey: ['totalHectares', 1], queryFn: async () => await ReportsHttpService.getTotalHectares() },
+        { queryKey: ['totalArableArea', 2], queryFn: async () => await ReportsHttpService.getTotalArableArea() },
         { queryKey: ['totalFailureSAP', 3], queryFn: async () => await ReportsHttpService.getTotalFarms() },
         { queryKey: ['totalFinishedSAP', 4], queryFn: async () => await ReportsHttpService.getTotalFarms() },
     ])
 
-    console.log(results);
+    const charts: any = useQueries([
+        { queryKey: ['farmsByState', 0], queryFn: async () => await ReportsHttpService.getTotalFarmsByState() },
+        { queryKey: ['typeArea', 1], queryFn: async () => await ReportsHttpService.getTotalTypeArea() },
+    ])
 
     const dashboardItems = [
         { title: 'Total de fazendas', indexArrayResult: 0 },
-        { title: 'Área total (hectares)', indexArrayResult: 1 },
-        { title: 'Área áravel total (hectares)', indexArrayResult: 2},
+        { title: 'Área total', indexArrayResult: 1 },
+        { title: 'Área áravel total', indexArrayResult: 2 },
     ];
 
     return (
@@ -42,7 +43,6 @@ const Dashboard: React.FC = () => {
                                     borderColor={colorMode === 'dark' ? 'gray.700' : 'gray.200'}
                                     background={'green.700'}
                                     color="white"
-                                // onClick={() => setComponentName(item.componentName)}
                                 >
                                     <Stack direction="row" alignItems="center">
                                         <Text fontWeight="semibold">{item.title}</Text>
@@ -52,7 +52,7 @@ const Dashboard: React.FC = () => {
                                     <Text fontSize={'45px'}>
                                         {
                                             results[item.indexArrayResult].isFetching || results[item.indexArrayResult].isFetching
-                                                ? <Spinner size="lg" /> : results[item.indexArrayResult]?.data?.data.total}</Text>
+                                                ? <Spinner size="lg" /> : results[item.indexArrayResult]?.data?.data.total} ha</Text>
                                 </Stack>
 
 
@@ -66,18 +66,13 @@ const Dashboard: React.FC = () => {
             <Grid templateColumns='repeat(5, 8fr)' gap="4" m="4">
                 <Grid flexDirection={'column'}>
                     <GridItem w='100%'>
-                        <FarmsByStateChart />
-                    </GridItem>
-                </Grid>
-                <Grid>
-                    <GridItem w='100%'>
-                        <FarmsByCropsChart />
+                        <PieGraph title="Fazendas por estado" data={charts[0]?.data?.data} />
                     </GridItem>
                 </Grid>
 
                 <Grid>
                     <GridItem w='100%'>
-                        <ArableAreaByVegetationChart />
+                        <PieGraph title="Culturas" data={charts[1]?.data?.data} />
                     </GridItem>
                 </Grid>
             </Grid>

@@ -12,8 +12,9 @@ const menuItems = [
 const NavBarMenuItems: Function = (): JSX.Element[] => {
 	const colorModeValue = useColorModeValue('gray.200', 'gray.700');
 
-	return menuItems?.map((item: any) =>
+	return menuItems?.map((item: any, index: number) =>
 		<Link
+			key={index}
 			px={2}
 			py={1}
 			rounded={'md'}

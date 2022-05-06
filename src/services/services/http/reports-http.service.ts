@@ -14,4 +14,12 @@ export default class ReportsHttpService {
     public static getTotalArableArea() {
         return Request.get(`${this.uri}/total-arable-area`);
     } 
+
+    public static getTotalFarmsByState() {
+        return Request.get(`${this.uri}/farms-by-state`);
+    } 
+
+    public static getTotalTypeArea() {
+        return Request.get(`${this.uri}/type-area`);
+    } 
 }
