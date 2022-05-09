@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/brain-agriculture-frontend/static/js/main.1d3e38d0.js",
+    "static/js/377.3e2f97fb.chunk.js": "/brain-agriculture-frontend/static/js/377.3e2f97fb.chunk.js",
+    "index.html": "/brain-agriculture-frontend/index.html",
+    "main.1d3e38d0.js.map": "/brain-agriculture-frontend/static/js/main.1d3e38d0.js.map",
+    "377.3e2f97fb.chunk.js.map": "/brain-agriculture-frontend/static/js/377.3e2f97fb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.1d3e38d0.js"
+  ]
+}
